@@ -1,0 +1,120 @@
+
+def balance(str):    
+    string = list(str)
+    temp1 = []
+    temp2 = []
+    temp3 = []
+    for i in range(len(string)):
+        if string[i] == '{':
+           temp1.append('}')
+        elif string[i] == '}':
+            if len(temp1) == 0:
+                return False
+            temp1.pop()
+        if string[i] == '(':
+           temp2.append('(')
+        elif string[i] == ')':
+            if len(temp2) == 0:
+                return False
+            temp2.pop()
+        if string[i] == '[':
+           temp3.append(']')
+        elif string[i] == ']':
+            if len(temp3) == 0:
+                return False
+            temp3.pop()
+        else:
+            continue
+    if len(temp1) == 0 and len(temp2) == 0 and len(temp3) == 0:
+        return True
+    else:
+        return False
+
+def balance3(str):
+    opening = ['(', '{', '[']
+    closing = [')', '}', ']']
+    match = {}
+    for i in range(len(closing)):
+        ch = closing(i)
+        match[ch] = opening(i)
+    stack = []    
+    
+    for i in range(len(str)):
+        ch = str[i]
+        if ch in opening:
+            stack.append(ch)
+        if ch in closing:
+            if not stack or ch in match.values():
+                if not stack and stack[-1] != match[ch]:
+                    return False
+            stack.pop()
+    return len(stack) == 0
+
+def balance2(str):    
+    string = list(str)
+    temp = []
+    countT,count1,count2 = 0, 0, 0
+
+    for i in range(len(string)):
+        if string[i] == '{':
+           temp.append('}')
+           count1 += 1
+        elif string[i] == '}':
+            if len(temp) == 0:
+                return False
+            temp.pop()
+            count2 += 1
+        elif string[i] =='*':
+            countT += 1
+        else:
+            continue
+    if len(temp) == 0 or (countT >= abs(count1 - count2)):
+        return True
+    else:
+        return False
+
+def balance4(str):    
+    string = list(str)
+    count1, count2 = 0, 0
+    for i in range(len(string)):
+        if string[i] == '{' or string[i] == '*':
+            count1 += 1
+        elif string[i] == '}':
+            count1 -= 1
+    
+    for i in range(len(string)):
+        if string[i] == '}' or string[i] == '*':
+            count2 += 1
+        elif string[i] == '{':
+            count2 -= 1
+    
+    print(count1, count2)
+    
+    if count1 < 0 and count2 > 0:
+        return False
+    return True 
+
+#str = input()
+
+def is_valid_2(str):
+    cnt1 = cnt2 = 0
+    for ch in str:
+        if ch == '{':
+            cnt1 += 1
+            cnt2 += 1
+        elif ch == '}':
+            cnt1 -= 1
+            cnt2 = max(cnt2-1, 0)
+        elif ch == '*':
+            cnt1 += 1
+            cnt2 = max(cnt2-1, 0)
+        if cnt1 < 0:
+           return False  
+    
+    return cnt2 == 0
+
+str = '{**'
+print(str)
+#is_valid = balance(str)
+is_valid = balance4(str)
+print(is_valid)

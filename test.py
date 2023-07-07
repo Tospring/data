@@ -1,0 +1,5 @@
+a,b = map(int,input().split())
+print(a*5)
+print(a/b)
+print(f'{a/b:.2f}')
+print(f'Quotient: {a//b}, remainder: {a%b}')
